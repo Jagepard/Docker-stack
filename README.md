@@ -1,6 +1,6 @@
-# LEMP-docker
+# Docker-stack
 
-Run the command below to spin up the LEMP stack:
+Run the command below to spin up the Docker stack:
 ```
 docker-compose up -d
 ```
