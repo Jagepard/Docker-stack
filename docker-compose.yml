@@ -25,8 +25,8 @@ services:
         volumes:
             - ./mysql:/var/lib/mysql
         environment:
-            MYSQL_ROOT_PASSWORD: password
-    phpmyadmin:
+            MYSQL_ROOT_PASSWORD: secret
+    pma:
         image: phpmyadmin/phpmyadmin
         restart: always
         links:
@@ -36,7 +36,7 @@ services:
         environment:
             PMA_HOST: mysql
             MYSQL_USERNAME: root
-            MYSQL_ROOT_PASSWORD: password
+            MYSQL_ROOT_PASSWORD: secret
     postgres:
         image: postgres:12
         restart: always
