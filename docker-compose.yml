@@ -4,6 +4,7 @@ services:
         image: nginx:latest
         ports:
             - "80:80"
+            - "443:443"
         volumes:
             - ./hosts:/etc/nginx/conf.d
             - ./www:/var/www
@@ -24,8 +25,8 @@ services:
         volumes:
             - ./mysql:/var/lib/mysql
         environment:
-            MYSQL_ROOT_PASSWORD: secret
-    pma:
+            MYSQL_ROOT_PASSWORD: password
+    phpmyadmin:
         image: phpmyadmin/phpmyadmin
         restart: always
         links:
@@ -35,4 +36,26 @@ services:
         environment:
             PMA_HOST: mysql
             MYSQL_USERNAME: root
-            MYSQL_ROOT_PASSWORD: secret
+            MYSQL_ROOT_PASSWORD: password
+    postgres:
+        image: postgres:12
+        restart: always
+        environment:
+            PGSQL_ROOT_USER: postgres
+            POSTGRES_PASSWORD: password
+            POSTGRES_DB: postgres
+        ports:
+            - 5432:5432
+        volumes:
+            - pgdata:/var/lib/postgresql/data
+    phppgadmin:
+        image: neimheadh/phppgadmin:latest
+        ports:
+        - "88:80" # web browsers block the port 100080. Use 8080 instead.
+        environment:
+            POSTGRES_HOST: postgres
+            POSTGRES_PORT: 5432
+            POSTGRES_USER: postgres
+            POSTGRES_PASS: password
+volumes:
+  pgdata:
